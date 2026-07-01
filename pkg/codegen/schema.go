@@ -609,7 +609,12 @@ func GenerateGoSchema(sref *openapi3.SchemaRef, path []string) (Schema, error) {
 
 	// If Ref is set on the SchemaRef, it means that this type is actually a reference to
 	// another type. We're not de-referencing, so simply use the referenced type.
-	if IsGoTypeReference(sref.Ref) {
+	//
+	// refPath also covers the OpenAPI 3.1 `$recursiveRef: '#'` idiom (see
+	// effectiveRefPath): kin-openapi leaves sref.Ref empty for it, but it's
+	// semantically a $ref back to the root component schema being generated.
+	refPath := effectiveRefPath(sref, path)
+	if IsGoTypeReference(refPath) {
 		var refType string
 
 		// check if there is an x-go-type extension next to the $ref and use that over the overrided type.
@@ -623,10 +628,10 @@ func GenerateGoSchema(sref *openapi3.SchemaRef, path []string) (Schema, error) {
 		} else {
 			// Convert the reference path to Go type
 			var err error
-			refType, err = RefPathToGoType(sref.Ref)
+			refType, err = RefPathToGoType(refPath)
 			if err != nil {
 				return Schema{}, fmt.Errorf("error turning reference (%s) into a Go type: %s",
-					sref.Ref, err)
+					refPath, err)
 			}
 		}
 
@@ -1471,7 +1476,14 @@ func generateUnion(outSchema *Schema, elements openapi3.SchemaRefs, discriminato
 			return err
 		}
 
-		if element.Ref == "" {
+		// elementRef treats an inline `$recursiveRef: '#'` branch (see
+		// effectiveRefPath) the same as a real $ref: both name-derivation
+		// for the union member and discriminator-mapping-key derivation
+		// below need to see CompoundFilter's own ref path rather than
+		// falling into the "inline, unref'd branch" case.
+		elementRef := effectiveRefPath(element, elementPath)
+
+		if elementRef == "" {
 			elementName := SchemaNameToTypeName(PathToTypeName(elementPath))
 			if elementSchema.TypeDecl() == elementName {
 				elementSchema.GoType = elementName
@@ -1482,25 +1494,25 @@ func generateUnion(outSchema *Schema, elements openapi3.SchemaRefs, discriminato
 			}
 			outSchema.AdditionalTypes = append(outSchema.AdditionalTypes, elementSchema.AdditionalTypes...)
 		} else {
-			refToGoTypeMap[element.Ref] = elementSchema.GoType
+			refToGoTypeMap[elementRef] = elementSchema.GoType
 		}
 
 		if discriminator != nil {
-			if len(discriminator.Mapping) != 0 && element.Ref == "" {
+			if len(discriminator.Mapping) != 0 && elementRef == "" {
 				return errors.New("ambiguous discriminator.mapping: please replace inlined object with $ref")
 			}
 
 			// Explicit mapping.
 			var mapped bool
 			for k, v := range discriminator.Mapping {
-				if v.Ref == element.Ref {
+				if v.Ref == elementRef {
 					outSchema.Discriminator.Mapping[k] = elementSchema.GoType
 					mapped = true
 				}
 			}
 			// Implicit mapping.
 			if !mapped {
-				key := RefPathToObjName(element.Ref)
+				key := RefPathToObjName(elementRef)
 				if key == "" {
 					// Inline variant: there's no $ref to derive a name
 					// from. Fall back to the discriminator's own wire
@@ -1592,6 +1604,52 @@ func combinedSchemaExtensions(r *openapi3.SchemaRef) map[string]any {
 	maps.Copy(combined, r.Extensions)
 
 	return combined
+}
+
+// recursiveRefKeyword is the JSON Schema Draft 2019-09 keyword OpenAI's
+// (and other) OpenAPI 3.1 specs use for self-reference inside a recursively
+// defined schema. It was superseded by `$dynamicRef`/`$dynamicAnchor` in
+// Draft 2020-12, which kin-openapi does understand, but `$recursiveRef` is
+// not parsed at all: it falls through into Schema.Extensions and the
+// SchemaRef's Ref/Value are left as an empty, ref-less schema.
+const recursiveRefKeyword = "$recursiveRef"
+
+// rootSelfRef reports whether sref is an inline `$recursiveRef: '#'` branch:
+// a bare, unresolved reference back to the root schema of the document
+// being walked. We only special-case the bare `'#'` form, meaning "the
+// nearest enclosing dynamic anchor, which for a schema like
+// CompoundFilter's own `oneOf` is CompoundFilter itself" -- the common,
+// well-defined case emitted by real-world 3.1 specs (e.g. OpenAI's).
+// Arbitrary non-root `$recursiveRef` targets are not handled, matching
+// kin-openapi's own lack of general `$recursiveRef`/`$dynamicRef`
+// resolution.
+func rootSelfRef(sref *openapi3.SchemaRef) bool {
+	if sref == nil || sref.Ref != "" || sref.Value == nil {
+		return false
+	}
+	target, ok := sref.Value.Extensions[recursiveRefKeyword]
+	if !ok {
+		return false
+	}
+	s, ok := target.(string)
+	return ok && s == "#"
+}
+
+// effectiveRefPath returns the $ref path that sref should be treated as
+// pointing to for the purposes of Go type generation. Normally that's just
+// sref.Ref. But an inline `$recursiveRef: '#'` branch carries no Ref at
+// all -- kin-openapi doesn't parse the keyword -- even though it is
+// semantically a self-reference to the root component schema currently
+// being generated. path[0] is that root schema's name: every entry point
+// into GenerateGoSchema for a component schema starts with
+// []string{schemaName}, and path is only ever appended to as generation
+// recurses into properties/items/oneOf branches, so path[0] is stable
+// across the whole recursive walk.
+func effectiveRefPath(sref *openapi3.SchemaRef, path []string) string {
+	if rootSelfRef(sref) && len(path) > 0 {
+		return "#/components/schemas/" + path[0]
+	}
+	return sref.Ref
 }
 
 // hasStructuralSiblings reports whether a schema with allOf also carries

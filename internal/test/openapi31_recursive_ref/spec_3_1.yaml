@@ -1,0 +1,48 @@
+openapi: 3.1.0
+info:
+  title: Self-referential oneOf via $recursiveRef (OpenAPI 3.1)
+  version: 1.0.0
+  description: |
+    Regression fixture for the JSON Schema Draft 2019-09 `$recursiveRef: '#'`
+    keyword used by real-world OpenAPI 3.1 specs (e.g. OpenAI's) to express
+    "this branch is the enclosing root schema itself" -- a self-reference
+    inside a recursively defined schema, without repeating a `$ref` back to
+    its own component name. kin-openapi does not parse `$recursiveRef` at
+    all (it understands the Draft 2020-12 successor, `$dynamicRef`, but not
+    this older keyword), so the branch surfaces as an inline schema with no
+    `$ref` and no constant discriminator value, which used to make
+    discriminator-mapping generation fail outright. This mirrors the real
+    OpenAI spec's `CompoundFilter` schema: an object with an array property
+    whose items are `oneOf` a leaf ref and a `$recursiveRef: '#'` back to
+    the array's own enclosing object.
+paths: {}
+components:
+  schemas:
+    LeafFilter:
+      type: object
+      title: Leaf Filter
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [leaf]
+        key:
+          type: string
+      additionalProperties: false
+    CompoundFilter:
+      type: object
+      title: Compound Filter
+      description: Combine multiple filters using `and` or `or`.
+      required: [type, filters]
+      properties:
+        type:
+          type: string
+          enum: [and, or]
+        filters:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/LeafFilter'
+              - $recursiveRef: '#'
+            discriminator:
+              propertyName: type
