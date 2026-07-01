@@ -14,11 +14,32 @@ type RefWrapper struct {
 }
 
 func walkSwagger(swagger *openapi3.T, doFn func(RefWrapper) (bool, error)) error {
-	if swagger == nil || swagger.Paths == nil {
+	if swagger == nil {
 		return nil
 	}
 
-	for _, p := range swagger.Paths.Map() {
+	if swagger.Paths != nil {
+		for _, p := range swagger.Paths.Map() {
+			for _, param := range p.Parameters {
+				_ = walkParameterRef(param, doFn)
+			}
+			for _, op := range p.Operations() {
+				_ = walkOperation(op, doFn)
+			}
+		}
+	}
+
+	// swagger.Webhooks (OpenAPI 3.1+) holds top-level PathItems that are
+	// not nested under swagger.Paths, so they need their own walk here.
+	// Without this, any schema reachable only via a webhook's
+	// requestBody/response (and not cross-referenced anywhere under
+	// components/) looks orphaned to findComponentRefs and gets deleted
+	// by pruneUnusedComponents -- even though WebhookOperationDefinitions
+	// (called later, in Generate) still emits a Go reference to it.
+	for _, p := range swagger.Webhooks {
+		if p == nil {
+			continue
+		}
 		for _, param := range p.Parameters {
 			_ = walkParameterRef(param, doFn)
 		}

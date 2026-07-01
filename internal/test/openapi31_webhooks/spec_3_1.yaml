@@ -1,0 +1,53 @@
+openapi: 3.1.0
+info:
+  title: Webhook-only-referenced schema (OpenAPI 3.1)
+  version: 1.0.0
+  description: |
+    Regression fixture mirroring the real OpenAI OpenAPI spec: a top-level
+    `webhooks:` entry (OpenAPI 3.1+) whose request body schema
+    (WidgetCreated) is a normal `components/schemas` entry that is NOT
+    referenced anywhere else in the document -- not from any `paths:`
+    operation, and not cross-referenced from any other `components/`
+    schema. It is reachable only by walking `webhooks:`.
+
+    Before the fix, `pruneUnusedComponents` computed "is this schema
+    referenced anywhere" by walking `swagger.Paths` and `swagger.Components`
+    only (see pkg/codegen/prune.go's `walkSwagger`), never `swagger.Webhooks`.
+    So a schema referenced only from a webhook's requestBody looked
+    orphaned and was deleted from the spec by the default (skip-prune:
+    false) pruning pass -- before `WebhookOperationDefinitions` (which
+    walks `swagger.Webhooks` directly, independent of pruning) ran and
+    emitted a Go `type ... = WidgetCreated` alias referencing it. The
+    result: oapi-codegen exited 0, but the generated file didn't compile,
+    with `undefined: WidgetCreated`.
+paths: {}
+webhooks:
+  widget.created:
+    post:
+      operationId: widgetCreated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WidgetCreated'
+      responses:
+        "200":
+          description: Return a 200 to acknowledge receipt of the event.
+components:
+  schemas:
+    WidgetCreated:
+      type: object
+      title: widget.created
+      description: Sent when a widget is created.
+      required:
+        - id
+        - type
+        - name
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [widget.created]
+        name:
+          type: string
