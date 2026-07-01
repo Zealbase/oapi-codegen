@@ -86,20 +86,52 @@ func (t DiscriminatedPet) AsCat() (Cat, error) {
 
 // FromCat overwrites any union data inside the DiscriminatedPet as the provided Cat
 func (t *DiscriminatedPet) FromCat(v Cat) error {
-	v.Kind = "Cat"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since Cat's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["kind"], err = json.Marshal("Cat")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeCat performs a merge with any union data inside the DiscriminatedPet, using the provided Cat
 func (t *DiscriminatedPet) MergeCat(v Cat) error {
-	v.Kind = "Cat"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since Cat's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["kind"], err = json.Marshal("Cat")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -114,20 +146,52 @@ func (t DiscriminatedPet) AsDog() (Dog, error) {
 
 // FromDog overwrites any union data inside the DiscriminatedPet as the provided Dog
 func (t *DiscriminatedPet) FromDog(v Dog) error {
-	v.Kind = "Dog"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since Dog's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["kind"], err = json.Marshal("Dog")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeDog performs a merge with any union data inside the DiscriminatedPet, using the provided Dog
 func (t *DiscriminatedPet) MergeDog(v Dog) error {
-	v.Kind = "Dog"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since Dog's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["kind"], err = json.Marshal("Dog")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err

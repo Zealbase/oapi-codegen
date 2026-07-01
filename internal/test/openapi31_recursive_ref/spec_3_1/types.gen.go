@@ -75,20 +75,52 @@ func (t CompoundFilter_Filters_Item) AsLeafFilter() (LeafFilter, error) {
 
 // FromLeafFilter overwrites any union data inside the CompoundFilter_Filters_Item as the provided LeafFilter
 func (t *CompoundFilter_Filters_Item) FromLeafFilter(v LeafFilter) error {
-	v.Type = "LeafFilter"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since LeafFilter's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["type"], err = json.Marshal("LeafFilter")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeLeafFilter performs a merge with any union data inside the CompoundFilter_Filters_Item, using the provided LeafFilter
 func (t *CompoundFilter_Filters_Item) MergeLeafFilter(v LeafFilter) error {
-	v.Type = "LeafFilter"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since LeafFilter's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["type"], err = json.Marshal("LeafFilter")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -103,20 +135,52 @@ func (t CompoundFilter_Filters_Item) AsCompoundFilter() (CompoundFilter, error) 
 
 // FromCompoundFilter overwrites any union data inside the CompoundFilter_Filters_Item as the provided CompoundFilter
 func (t *CompoundFilter_Filters_Item) FromCompoundFilter(v CompoundFilter) error {
-	v.Type = "CompoundFilter"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since CompoundFilter's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["type"], err = json.Marshal("CompoundFilter")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeCompoundFilter performs a merge with any union data inside the CompoundFilter_Filters_Item, using the provided CompoundFilter
 func (t *CompoundFilter_Filters_Item) MergeCompoundFilter(v CompoundFilter) error {
-	v.Type = "CompoundFilter"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since CompoundFilter's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["type"], err = json.Marshal("CompoundFilter")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err

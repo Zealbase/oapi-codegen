@@ -1,0 +1,82 @@
+openapi: 3.1.0
+info:
+  title: Discriminator setters for optional/pointer and nested-union members (OpenAPI 3.1)
+  version: 1.0.0
+  description: |
+    Regression fixture for two bugs in the generated From*/Merge* union
+    discriminator-setter helpers, found while generating types for the
+    real OpenAI OpenAPI spec:
+
+    1. When a discriminated union member's discriminator property is
+       optional (common in 3.1, where so much is nullable/optional), the
+       generated field is `*NamedType` rather than a plain string-based
+       type. The setter used to do `v.Type = "value"`, a bare untyped
+       string constant, which does not compile against a pointer field.
+       `Envelope1` below has an optional `type` property to reproduce this.
+
+    2. When a discriminated union member is itself another discriminated
+       union (a "nested union"), it has no flat discriminator field of its
+       own -- only a `union json.RawMessage` field -- so `v.Type = "value"`
+       fails to compile outright ("type X has no field or method Type").
+       This mirrors the real spec's `InputItem` union, one of whose
+       members (`Item`) is itself a discriminated union over
+       `InputMessage`/`OutputMessage`/etc. `NestedUnion` below reproduces
+       this: it's a member of `Envelope` and is itself a oneOf/discriminator
+       over `LeafA`/`LeafB`.
+paths: {}
+components:
+  schemas:
+    Envelope0:
+      type: object
+      title: Envelope variant with a required (plain string) discriminator
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [envelope0]
+        value:
+          type: string
+    Envelope1:
+      type: object
+      title: Envelope variant with an optional (pointer) discriminator
+      properties:
+        type:
+          type: string
+          enum: [envelope1]
+        value:
+          type: string
+    LeafA:
+      type: object
+      title: Leaf A
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [leafA]
+        a:
+          type: string
+    LeafB:
+      type: object
+      title: Leaf B
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [leafB]
+        b:
+          type: string
+    NestedUnion:
+      title: A discriminated union that is itself a member of another union
+      oneOf:
+        - $ref: '#/components/schemas/LeafA'
+        - $ref: '#/components/schemas/LeafB'
+      discriminator:
+        propertyName: type
+    Envelope:
+      title: Top-level union with a required, an optional, and a nested-union member
+      oneOf:
+        - $ref: '#/components/schemas/Envelope0'
+        - $ref: '#/components/schemas/Envelope1'
+        - $ref: '#/components/schemas/NestedUnion'
+      discriminator:
+        propertyName: type

@@ -96,20 +96,52 @@ func (t TurnDetection) AsTurnDetection0() (TurnDetection0, error) {
 
 // FromTurnDetection0 overwrites any union data inside the TurnDetection as the provided TurnDetection0
 func (t *TurnDetection) FromTurnDetection0(v TurnDetection0) error {
-	v.Type = "server_vad"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since TurnDetection0's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["type"], err = json.Marshal("server_vad")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeTurnDetection0 performs a merge with any union data inside the TurnDetection, using the provided TurnDetection0
 func (t *TurnDetection) MergeTurnDetection0(v TurnDetection0) error {
-	v.Type = "server_vad"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since TurnDetection0's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["type"], err = json.Marshal("server_vad")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -124,20 +156,52 @@ func (t TurnDetection) AsTurnDetection1() (TurnDetection1, error) {
 
 // FromTurnDetection1 overwrites any union data inside the TurnDetection as the provided TurnDetection1
 func (t *TurnDetection) FromTurnDetection1(v TurnDetection1) error {
-	v.Type = "semantic_vad"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since TurnDetection1's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["type"], err = json.Marshal("semantic_vad")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeTurnDetection1 performs a merge with any union data inside the TurnDetection, using the provided TurnDetection1
 func (t *TurnDetection) MergeTurnDetection1(v TurnDetection1) error {
-	v.Type = "semantic_vad"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since TurnDetection1's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["type"], err = json.Marshal("semantic_vad")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err

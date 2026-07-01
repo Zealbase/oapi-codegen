@@ -14,41 +14,68 @@
 
         // From{{ .Method }} overwrites any union data inside the {{$typeName}} as the provided {{.}}
         func (t *{{$typeName}}) From{{ .Method }} (v {{.}}) error {
+            {{$hasOwnProperty := false -}}
             {{if $discriminator -}}
                 {{if eq $numberOfUnionTypes (len $discriminator.Mapping) -}}
+                    {{range $properties -}}
+                        {{if eq .GoFieldName $discriminator.PropertyName -}}
+                            {{$hasOwnProperty = true -}}
+                        {{end -}}
+                    {{end -}}
                     {{range $value, $type := $discriminator.Mapping -}}
                         {{if eq $type $element -}}
-                            {{$hasProperty := false -}}
-                            {{range $properties -}}
-                                {{if eq .GoFieldName $discriminator.PropertyName -}}
-                                    t.{{$discriminator.PropertyName}} = "{{$value}}"
-                                    {{$hasProperty = true -}}
-                                {{end -}}
+                            {{if $hasOwnProperty -}}
+                                t.{{$discriminator.PropertyName}} = "{{$value}}"
                             {{end -}}
-                            {{if not $hasProperty}}v.{{$discriminator.PropertyName}} = "{{$value}}"{{end}}
                         {{end -}}
                     {{end -}}
                 {{end -}}
             {{end -}}
             b, err := json.Marshal(v)
+            if err != nil {
+                return err
+            }
+            {{if and $discriminator (not $hasOwnProperty) (eq $numberOfUnionTypes (len $discriminator.Mapping)) -}}
+                {{range $value, $type := $discriminator.Mapping -}}
+                    {{if eq $type $element -}}
+                        // The discriminator property is set on the marshaled JSON directly rather
+                        // than on the Go struct field, since {{$type}}'s discriminator field may be
+                        // absent, optional (pointer), or of a named type incompatible with a bare
+                        // string literal.
+                        object := make(map[string]json.RawMessage)
+                        if err := json.Unmarshal(b, &object); err != nil {
+                            return err
+                        }
+                        object["{{$discriminator.Property}}"], err = json.Marshal("{{$value}}")
+                        if err != nil {
+                            return err
+                        }
+                        b, err = json.Marshal(object)
+                        if err != nil {
+                            return err
+                        }
+                    {{end -}}
+                {{end -}}
+            {{end -}}
             t.union = b
             return err
         }
 
         // Merge{{ .Method }} performs a merge with any union data inside the {{$typeName}}, using the provided {{.}}
         func (t *{{$typeName}}) Merge{{ .Method }} (v {{.}}) error {
+            {{$hasOwnProperty := false -}}
             {{if $discriminator -}}
                 {{if eq $numberOfUnionTypes (len $discriminator.Mapping) -}}
+                    {{range $properties -}}
+                        {{if eq .GoFieldName $discriminator.PropertyName -}}
+                            {{$hasOwnProperty = true -}}
+                        {{end -}}
+                    {{end -}}
                     {{range $value, $type := $discriminator.Mapping -}}
                         {{if eq $type $element -}}
-                            {{$hasProperty := false -}}
-                            {{range $properties -}}
-                                {{if eq .GoFieldName $discriminator.PropertyName -}}
-                                    t.{{$discriminator.PropertyName}} = "{{$value}}"
-                                    {{$hasProperty = true -}}
-                                {{end -}}
+                            {{if $hasOwnProperty -}}
+                                t.{{$discriminator.PropertyName}} = "{{$value}}"
                             {{end -}}
-                            {{if not $hasProperty}}v.{{$discriminator.PropertyName}} = "{{$value}}"{{end}}
                         {{end -}}
                     {{end -}}
                 {{end -}}
@@ -57,6 +84,28 @@
             if err != nil {
               return err
             }
+            {{if and $discriminator (not $hasOwnProperty) (eq $numberOfUnionTypes (len $discriminator.Mapping)) -}}
+                {{range $value, $type := $discriminator.Mapping -}}
+                    {{if eq $type $element -}}
+                        // The discriminator property is set on the marshaled JSON directly rather
+                        // than on the Go struct field, since {{$type}}'s discriminator field may be
+                        // absent, optional (pointer), or of a named type incompatible with a bare
+                        // string literal.
+                        object := make(map[string]json.RawMessage)
+                        if err := json.Unmarshal(b, &object); err != nil {
+                            return err
+                        }
+                        object["{{$discriminator.Property}}"], err = json.Marshal("{{$value}}")
+                        if err != nil {
+                            return err
+                        }
+                        b, err = json.Marshal(object)
+                        if err != nil {
+                            return err
+                        }
+                    {{end -}}
+                {{end -}}
+            {{end -}}
 
             merged, err := runtime.JSONMerge(t.union, b)
             t.union = merged

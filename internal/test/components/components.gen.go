@@ -1000,6 +1000,9 @@ func (t AnyOfObject1) AsOneOfVariant4() (OneOfVariant4, error) {
 // FromOneOfVariant4 overwrites any union data inside the AnyOfObject1 as the provided OneOfVariant4
 func (t *AnyOfObject1) FromOneOfVariant4(v OneOfVariant4) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1010,7 +1013,6 @@ func (t *AnyOfObject1) MergeOneOfVariant4(v OneOfVariant4) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1026,6 +1028,9 @@ func (t AnyOfObject1) AsOneOfVariant5() (OneOfVariant5, error) {
 // FromOneOfVariant5 overwrites any union data inside the AnyOfObject1 as the provided OneOfVariant5
 func (t *AnyOfObject1) FromOneOfVariant5(v OneOfVariant5) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1036,7 +1041,6 @@ func (t *AnyOfObject1) MergeOneOfVariant5(v OneOfVariant5) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1062,6 +1066,9 @@ func (t OneOfObject1) AsOneOfVariant1() (OneOfVariant1, error) {
 // FromOneOfVariant1 overwrites any union data inside the OneOfObject1 as the provided OneOfVariant1
 func (t *OneOfObject1) FromOneOfVariant1(v OneOfVariant1) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1072,7 +1079,6 @@ func (t *OneOfObject1) MergeOneOfVariant1(v OneOfVariant1) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1088,6 +1094,9 @@ func (t OneOfObject1) AsOneOfVariant2() (OneOfVariant2, error) {
 // FromOneOfVariant2 overwrites any union data inside the OneOfObject1 as the provided OneOfVariant2
 func (t *OneOfObject1) FromOneOfVariant2(v OneOfVariant2) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1098,7 +1107,6 @@ func (t *OneOfObject1) MergeOneOfVariant2(v OneOfVariant2) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1114,6 +1122,9 @@ func (t OneOfObject1) AsOneOfVariant3() (OneOfVariant3, error) {
 // FromOneOfVariant3 overwrites any union data inside the OneOfObject1 as the provided OneOfVariant3
 func (t *OneOfObject1) FromOneOfVariant3(v OneOfVariant3) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1124,7 +1135,6 @@ func (t *OneOfObject1) MergeOneOfVariant3(v OneOfVariant3) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1150,6 +1160,9 @@ func (t OneOfObject10) AsOneOfObject100() (OneOfObject100, error) {
 // FromOneOfObject100 overwrites any union data inside the OneOfObject10 as the provided OneOfObject100
 func (t *OneOfObject10) FromOneOfObject100(v OneOfObject100) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1160,7 +1173,6 @@ func (t *OneOfObject10) MergeOneOfObject100(v OneOfObject100) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1176,6 +1188,9 @@ func (t OneOfObject10) AsOneOfObject101() (OneOfObject101, error) {
 // FromOneOfObject101 overwrites any union data inside the OneOfObject10 as the provided OneOfObject101
 func (t *OneOfObject10) FromOneOfObject101(v OneOfObject101) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1186,7 +1201,6 @@ func (t *OneOfObject10) MergeOneOfObject101(v OneOfObject101) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1274,6 +1288,9 @@ func (t OneOfObject11_AdditionalProperties) AsOneOfObject110() (OneOfObject110, 
 // FromOneOfObject110 overwrites any union data inside the OneOfObject11_AdditionalProperties as the provided OneOfObject110
 func (t *OneOfObject11_AdditionalProperties) FromOneOfObject110(v OneOfObject110) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1284,7 +1301,6 @@ func (t *OneOfObject11_AdditionalProperties) MergeOneOfObject110(v OneOfObject11
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1300,6 +1316,9 @@ func (t OneOfObject11_AdditionalProperties) AsOneOfObject111() (OneOfObject111, 
 // FromOneOfObject111 overwrites any union data inside the OneOfObject11_AdditionalProperties as the provided OneOfObject111
 func (t *OneOfObject11_AdditionalProperties) FromOneOfObject111(v OneOfObject111) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1310,7 +1329,6 @@ func (t *OneOfObject11_AdditionalProperties) MergeOneOfObject111(v OneOfObject11
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1326,6 +1344,9 @@ func (t OneOfObject11_AdditionalProperties) AsOneOfObject112() (OneOfObject112, 
 // FromOneOfObject112 overwrites any union data inside the OneOfObject11_AdditionalProperties as the provided OneOfObject112
 func (t *OneOfObject11_AdditionalProperties) FromOneOfObject112(v OneOfObject112) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1336,7 +1357,6 @@ func (t *OneOfObject11_AdditionalProperties) MergeOneOfObject112(v OneOfObject11
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1362,6 +1382,9 @@ func (t OneOfObject12) AsOneOfObject120() (OneOfObject120, error) {
 // FromOneOfObject120 overwrites any union data inside the OneOfObject12 as the provided OneOfObject120
 func (t *OneOfObject12) FromOneOfObject120(v OneOfObject120) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1372,7 +1395,6 @@ func (t *OneOfObject12) MergeOneOfObject120(v OneOfObject120) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1388,6 +1410,9 @@ func (t OneOfObject12) AsOneOfObject121() (OneOfObject121, error) {
 // FromOneOfObject121 overwrites any union data inside the OneOfObject12 as the provided OneOfObject121
 func (t *OneOfObject12) FromOneOfObject121(v OneOfObject121) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1398,7 +1423,6 @@ func (t *OneOfObject12) MergeOneOfObject121(v OneOfObject121) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1414,6 +1438,9 @@ func (t OneOfObject12) AsOneOfVariant3() (OneOfVariant3, error) {
 // FromOneOfVariant3 overwrites any union data inside the OneOfObject12 as the provided OneOfVariant3
 func (t *OneOfObject12) FromOneOfVariant3(v OneOfVariant3) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1424,7 +1451,6 @@ func (t *OneOfObject12) MergeOneOfVariant3(v OneOfVariant3) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1440,6 +1466,9 @@ func (t OneOfObject12) AsOneOfVariant4() (OneOfVariant4, error) {
 // FromOneOfVariant4 overwrites any union data inside the OneOfObject12 as the provided OneOfVariant4
 func (t *OneOfObject12) FromOneOfVariant4(v OneOfVariant4) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1450,7 +1479,6 @@ func (t *OneOfObject12) MergeOneOfVariant4(v OneOfVariant4) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1476,8 +1504,10 @@ func (t OneOfObject13) AsOneOfVariant1() (OneOfVariant1, error) {
 // FromOneOfVariant1 overwrites any union data inside the OneOfObject13 as the provided OneOfVariant1
 func (t *OneOfObject13) FromOneOfVariant1(v OneOfVariant1) error {
 	t.Type = "v1"
-
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1485,12 +1515,10 @@ func (t *OneOfObject13) FromOneOfVariant1(v OneOfVariant1) error {
 // MergeOneOfVariant1 performs a merge with any union data inside the OneOfObject13, using the provided OneOfVariant1
 func (t *OneOfObject13) MergeOneOfVariant1(v OneOfVariant1) error {
 	t.Type = "v1"
-
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1506,8 +1534,10 @@ func (t OneOfObject13) AsOneOfVariant6() (OneOfVariant6, error) {
 // FromOneOfVariant6 overwrites any union data inside the OneOfObject13 as the provided OneOfVariant6
 func (t *OneOfObject13) FromOneOfVariant6(v OneOfVariant6) error {
 	t.Type = "v6"
-
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1515,12 +1545,10 @@ func (t *OneOfObject13) FromOneOfVariant6(v OneOfVariant6) error {
 // MergeOneOfVariant6 performs a merge with any union data inside the OneOfObject13, using the provided OneOfVariant6
 func (t *OneOfObject13) MergeOneOfVariant6(v OneOfVariant6) error {
 	t.Type = "v6"
-
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1559,6 +1587,9 @@ func (t OneOfObject2) AsOneOfObject20() (OneOfObject20, error) {
 // FromOneOfObject20 overwrites any union data inside the OneOfObject2 as the provided OneOfObject20
 func (t *OneOfObject2) FromOneOfObject20(v OneOfObject20) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1569,7 +1600,6 @@ func (t *OneOfObject2) MergeOneOfObject20(v OneOfObject20) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1585,6 +1615,9 @@ func (t OneOfObject2) AsOneOfObject21() (OneOfObject21, error) {
 // FromOneOfObject21 overwrites any union data inside the OneOfObject2 as the provided OneOfObject21
 func (t *OneOfObject2) FromOneOfObject21(v OneOfObject21) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1595,7 +1628,6 @@ func (t *OneOfObject2) MergeOneOfObject21(v OneOfObject21) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1611,6 +1643,9 @@ func (t OneOfObject2) AsOneOfObject22() (OneOfObject22, error) {
 // FromOneOfObject22 overwrites any union data inside the OneOfObject2 as the provided OneOfObject22
 func (t *OneOfObject2) FromOneOfObject22(v OneOfObject22) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1621,7 +1656,6 @@ func (t *OneOfObject2) MergeOneOfObject22(v OneOfObject22) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1647,6 +1681,9 @@ func (t OneOfObject3_Union) AsOneOfVariant1() (OneOfVariant1, error) {
 // FromOneOfVariant1 overwrites any union data inside the OneOfObject3_Union as the provided OneOfVariant1
 func (t *OneOfObject3_Union) FromOneOfVariant1(v OneOfVariant1) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1657,7 +1694,6 @@ func (t *OneOfObject3_Union) MergeOneOfVariant1(v OneOfVariant1) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1673,6 +1709,9 @@ func (t OneOfObject3_Union) AsOneOfVariant2() (OneOfVariant2, error) {
 // FromOneOfVariant2 overwrites any union data inside the OneOfObject3_Union as the provided OneOfVariant2
 func (t *OneOfObject3_Union) FromOneOfVariant2(v OneOfVariant2) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1683,7 +1722,6 @@ func (t *OneOfObject3_Union) MergeOneOfVariant2(v OneOfVariant2) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1699,6 +1737,9 @@ func (t OneOfObject3_Union) AsOneOfVariant3() (OneOfVariant3, error) {
 // FromOneOfVariant3 overwrites any union data inside the OneOfObject3_Union as the provided OneOfVariant3
 func (t *OneOfObject3_Union) FromOneOfVariant3(v OneOfVariant3) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1709,7 +1750,6 @@ func (t *OneOfObject3_Union) MergeOneOfVariant3(v OneOfVariant3) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1735,6 +1775,9 @@ func (t OneOfObject4) AsOneOfVariant1() (OneOfVariant1, error) {
 // FromOneOfVariant1 overwrites any union data inside the OneOfObject4 as the provided OneOfVariant1
 func (t *OneOfObject4) FromOneOfVariant1(v OneOfVariant1) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1745,7 +1788,6 @@ func (t *OneOfObject4) MergeOneOfVariant1(v OneOfVariant1) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1761,6 +1803,9 @@ func (t OneOfObject4) AsOneOfVariant2() (OneOfVariant2, error) {
 // FromOneOfVariant2 overwrites any union data inside the OneOfObject4 as the provided OneOfVariant2
 func (t *OneOfObject4) FromOneOfVariant2(v OneOfVariant2) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1771,7 +1816,6 @@ func (t *OneOfObject4) MergeOneOfVariant2(v OneOfVariant2) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1787,6 +1831,9 @@ func (t OneOfObject4) AsOneOfVariant3() (OneOfVariant3, error) {
 // FromOneOfVariant3 overwrites any union data inside the OneOfObject4 as the provided OneOfVariant3
 func (t *OneOfObject4) FromOneOfVariant3(v OneOfVariant3) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -1797,7 +1844,6 @@ func (t *OneOfObject4) MergeOneOfVariant3(v OneOfVariant3) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1856,20 +1902,52 @@ func (t OneOfObject5) AsOneOfVariant4() (OneOfVariant4, error) {
 
 // FromOneOfVariant4 overwrites any union data inside the OneOfObject5 as the provided OneOfVariant4
 func (t *OneOfObject5) FromOneOfVariant4(v OneOfVariant4) error {
-	v.Discriminator = "OneOfVariant4"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant4's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("OneOfVariant4")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeOneOfVariant4 performs a merge with any union data inside the OneOfObject5, using the provided OneOfVariant4
 func (t *OneOfObject5) MergeOneOfVariant4(v OneOfVariant4) error {
-	v.Discriminator = "OneOfVariant4"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant4's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("OneOfVariant4")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1884,20 +1962,52 @@ func (t OneOfObject5) AsOneOfVariant5() (OneOfVariant5, error) {
 
 // FromOneOfVariant5 overwrites any union data inside the OneOfObject5 as the provided OneOfVariant5
 func (t *OneOfObject5) FromOneOfVariant5(v OneOfVariant5) error {
-	v.Discriminator = "OneOfVariant5"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant5's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("OneOfVariant5")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeOneOfVariant5 performs a merge with any union data inside the OneOfObject5, using the provided OneOfVariant5
 func (t *OneOfObject5) MergeOneOfVariant5(v OneOfVariant5) error {
-	v.Discriminator = "OneOfVariant5"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant5's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("OneOfVariant5")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1945,20 +2055,52 @@ func (t OneOfObject6) AsOneOfVariant4() (OneOfVariant4, error) {
 
 // FromOneOfVariant4 overwrites any union data inside the OneOfObject6 as the provided OneOfVariant4
 func (t *OneOfObject6) FromOneOfVariant4(v OneOfVariant4) error {
-	v.Discriminator = "v4"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant4's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("v4")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeOneOfVariant4 performs a merge with any union data inside the OneOfObject6, using the provided OneOfVariant4
 func (t *OneOfObject6) MergeOneOfVariant4(v OneOfVariant4) error {
-	v.Discriminator = "v4"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant4's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("v4")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -1973,20 +2115,52 @@ func (t OneOfObject6) AsOneOfVariant5() (OneOfVariant5, error) {
 
 // FromOneOfVariant5 overwrites any union data inside the OneOfObject6 as the provided OneOfVariant5
 func (t *OneOfObject6) FromOneOfVariant5(v OneOfVariant5) error {
-	v.Discriminator = "v5"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant5's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("v5")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeOneOfVariant5 performs a merge with any union data inside the OneOfObject6, using the provided OneOfVariant5
 func (t *OneOfObject6) MergeOneOfVariant5(v OneOfVariant5) error {
-	v.Discriminator = "v5"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant5's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("v5")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2034,20 +2208,52 @@ func (t OneOfObject61) AsOneOfVariant4() (OneOfVariant4, error) {
 
 // FromOneOfVariant4 overwrites any union data inside the OneOfObject61 as the provided OneOfVariant4
 func (t *OneOfObject61) FromOneOfVariant4(v OneOfVariant4) error {
-	v.Discriminator = "v4"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant4's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("v4")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeOneOfVariant4 performs a merge with any union data inside the OneOfObject61, using the provided OneOfVariant4
 func (t *OneOfObject61) MergeOneOfVariant4(v OneOfVariant4) error {
-	v.Discriminator = "v4"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant4's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("v4")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2062,20 +2268,52 @@ func (t OneOfObject61) AsOneOfVariant5() (OneOfVariant5, error) {
 
 // FromOneOfVariant5 overwrites any union data inside the OneOfObject61 as the provided OneOfVariant5
 func (t *OneOfObject61) FromOneOfVariant5(v OneOfVariant5) error {
-	v.Discriminator = "OneOfVariant5"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant5's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("OneOfVariant5")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeOneOfVariant5 performs a merge with any union data inside the OneOfObject61, using the provided OneOfVariant5
 func (t *OneOfObject61) MergeOneOfVariant5(v OneOfVariant5) error {
-	v.Discriminator = "OneOfVariant5"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant5's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("OneOfVariant5")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2123,20 +2361,52 @@ func (t OneOfObject62) AsOneOfVariant4() (OneOfVariant4, error) {
 
 // FromOneOfVariant4 overwrites any union data inside the OneOfObject62 as the provided OneOfVariant4
 func (t *OneOfObject62) FromOneOfVariant4(v OneOfVariant4) error {
-	v.Discriminator = "variant_four"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant4's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("variant_four")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeOneOfVariant4 performs a merge with any union data inside the OneOfObject62, using the provided OneOfVariant4
 func (t *OneOfObject62) MergeOneOfVariant4(v OneOfVariant4) error {
-	v.Discriminator = "variant_four"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant4's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("variant_four")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2151,20 +2421,52 @@ func (t OneOfObject62) AsOneOfVariant51() (OneOfVariant51, error) {
 
 // FromOneOfVariant51 overwrites any union data inside the OneOfObject62 as the provided OneOfVariant51
 func (t *OneOfObject62) FromOneOfVariant51(v OneOfVariant51) error {
-	v.Discriminator = "one_of_variant51"
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant51's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("one_of_variant51")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
 
 // MergeOneOfVariant51 performs a merge with any union data inside the OneOfObject62, using the provided OneOfVariant51
 func (t *OneOfObject62) MergeOneOfVariant51(v OneOfVariant51) error {
-	v.Discriminator = "one_of_variant51"
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
+	// The discriminator property is set on the marshaled JSON directly rather
+	// than on the Go struct field, since OneOfVariant51's discriminator field may be
+	// absent, optional (pointer), or of a named type incompatible with a bare
+	// string literal.
+	object := make(map[string]json.RawMessage)
+	if err := json.Unmarshal(b, &object); err != nil {
+		return err
+	}
+	object["discriminator"], err = json.Marshal("one_of_variant51")
+	if err != nil {
+		return err
+	}
+	b, err = json.Marshal(object)
+	if err != nil {
+		return err
+	}
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2213,6 +2515,9 @@ func (t OneOfObject7_Item) AsOneOfVariant1() (OneOfVariant1, error) {
 // FromOneOfVariant1 overwrites any union data inside the OneOfObject7_Item as the provided OneOfVariant1
 func (t *OneOfObject7_Item) FromOneOfVariant1(v OneOfVariant1) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -2223,7 +2528,6 @@ func (t *OneOfObject7_Item) MergeOneOfVariant1(v OneOfVariant1) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2239,6 +2543,9 @@ func (t OneOfObject7_Item) AsOneOfVariant2() (OneOfVariant2, error) {
 // FromOneOfVariant2 overwrites any union data inside the OneOfObject7_Item as the provided OneOfVariant2
 func (t *OneOfObject7_Item) FromOneOfVariant2(v OneOfVariant2) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -2249,7 +2556,6 @@ func (t *OneOfObject7_Item) MergeOneOfVariant2(v OneOfVariant2) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2275,6 +2581,9 @@ func (t OneOfObject8) AsOneOfVariant1() (OneOfVariant1, error) {
 // FromOneOfVariant1 overwrites any union data inside the OneOfObject8 as the provided OneOfVariant1
 func (t *OneOfObject8) FromOneOfVariant1(v OneOfVariant1) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -2285,7 +2594,6 @@ func (t *OneOfObject8) MergeOneOfVariant1(v OneOfVariant1) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2301,6 +2609,9 @@ func (t OneOfObject8) AsOneOfVariant2() (OneOfVariant2, error) {
 // FromOneOfVariant2 overwrites any union data inside the OneOfObject8 as the provided OneOfVariant2
 func (t *OneOfObject8) FromOneOfVariant2(v OneOfVariant2) error {
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -2311,7 +2622,6 @@ func (t *OneOfObject8) MergeOneOfVariant2(v OneOfVariant2) error {
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2371,8 +2681,10 @@ func (t OneOfObject9) AsOneOfVariant1() (OneOfVariant1, error) {
 // FromOneOfVariant1 overwrites any union data inside the OneOfObject9 as the provided OneOfVariant1
 func (t *OneOfObject9) FromOneOfVariant1(v OneOfVariant1) error {
 	t.Type = "v1"
-
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -2380,12 +2692,10 @@ func (t *OneOfObject9) FromOneOfVariant1(v OneOfVariant1) error {
 // MergeOneOfVariant1 performs a merge with any union data inside the OneOfObject9, using the provided OneOfVariant1
 func (t *OneOfObject9) MergeOneOfVariant1(v OneOfVariant1) error {
 	t.Type = "v1"
-
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
@@ -2401,8 +2711,10 @@ func (t OneOfObject9) AsOneOfVariant6() (OneOfVariant6, error) {
 // FromOneOfVariant6 overwrites any union data inside the OneOfObject9 as the provided OneOfVariant6
 func (t *OneOfObject9) FromOneOfVariant6(v OneOfVariant6) error {
 	t.Type = "v6"
-
 	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
 	t.union = b
 	return err
 }
@@ -2410,12 +2722,10 @@ func (t *OneOfObject9) FromOneOfVariant6(v OneOfVariant6) error {
 // MergeOneOfVariant6 performs a merge with any union data inside the OneOfObject9, using the provided OneOfVariant6
 func (t *OneOfObject9) MergeOneOfVariant6(v OneOfVariant6) error {
 	t.Type = "v6"
-
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
 	}
-
 	merged, err := runtime.JSONMerge(t.union, b)
 	t.union = merged
 	return err
