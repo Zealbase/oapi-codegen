@@ -1,0 +1,42 @@
+openapi: 3.1.0
+info:
+  title: Inline discriminated union nested under anyOf-null (OpenAPI 3.1)
+  version: 1.0.0
+  description: |
+    Regression fixture for a discriminated `oneOf` whose branches are
+    inline schemas (no `$ref`), with the whole `oneOf` wrapped one level
+    down inside an outer `anyOf: [<oneOf-with-discriminator>, {type:
+    "null"}]`. This mirrors the real OpenAI spec's `RealtimeTurnDetection`
+    schema. The null branch is a peer of the discriminator-bearing schema
+    at the *outer* anyOf level, not a peer of the discriminated variants
+    inside the oneOf itself (that nested-null case is covered separately
+    in openapi31_nullable).
+paths: {}
+components:
+  schemas:
+    TurnDetection:
+      anyOf:
+        - title: Turn Detection
+          oneOf:
+            - type: object
+              title: Server VAD
+              required: [type]
+              properties:
+                type:
+                  type: string
+                  const: server_vad
+                threshold:
+                  type: number
+            - type: object
+              title: Semantic VAD
+              required: [type]
+              properties:
+                type:
+                  type: string
+                  const: semantic_vad
+                eagerness:
+                  type: string
+                  enum: [low, medium, high]
+          discriminator:
+            propertyName: type
+        - type: "null"

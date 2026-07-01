@@ -1446,6 +1446,15 @@ func generateUnion(outSchema *Schema, elements openapi3.SchemaRefs, discriminato
 		outSchema.ArrayType = elementSchema.ArrayType
 		outSchema.SkipOptionalPointer = elementSchema.SkipOptionalPointer
 		outSchema.AdditionalTypes = append(outSchema.AdditionalTypes, elementSchema.AdditionalTypes...)
+		// The sole branch may itself be a discriminated union (e.g. `anyOf:
+		// [{oneOf: [...], discriminator: ...}, {type: "null"}]`, where the
+		// null branch sits beside a discriminator-bearing schema rather
+		// than inside the same oneOf/anyOf list as the discriminated
+		// variants). Inherit its union-ness too, or the collapse silently
+		// downgrades a discriminated union into a plain struct alias,
+		// losing the As*/From*/Discriminator accessors.
+		outSchema.UnionElements = elementSchema.UnionElements
+		outSchema.Discriminator = elementSchema.Discriminator
 		return nil
 	}
 
@@ -1491,7 +1500,24 @@ func generateUnion(outSchema *Schema, elements openapi3.SchemaRefs, discriminato
 			}
 			// Implicit mapping.
 			if !mapped {
-				outSchema.Discriminator.Mapping[RefPathToObjName(element.Ref)] = elementSchema.GoType
+				key := RefPathToObjName(element.Ref)
+				if key == "" {
+					// Inline variant: there's no $ref to derive a name
+					// from. Fall back to the discriminator's own wire
+					// value, read off the branch's own
+					// `properties[propertyName].const` (or the sole
+					// `enum` value), e.g. `properties.type.const:
+					// server_vad`. Without this, every inline branch
+					// would degenerate to the same empty key and
+					// collide in the mapping, silently dropping all but
+					// the last branch.
+					var ok bool
+					key, ok = inlineDiscriminatorValue(element.Value, discriminator.PropertyName)
+					if !ok {
+						return fmt.Errorf("discriminator: inline oneOf/anyOf branch has no $ref and no constant value for discriminator property %q to derive a mapping key from", discriminator.PropertyName)
+					}
+				}
+				outSchema.Discriminator.Mapping[key] = elementSchema.GoType
 			}
 		}
 		outSchema.UnionElements = append(outSchema.UnionElements, UnionElement(elementSchema.GoType))
@@ -1509,6 +1535,37 @@ func generateUnion(outSchema *Schema, elements openapi3.SchemaRefs, discriminato
 	}
 
 	return nil
+}
+
+// inlineDiscriminatorValue extracts the wire-format discriminator value from
+// an inline (non-$ref) oneOf/anyOf branch, by inspecting the branch's own
+// `properties[propertyName]` schema. It returns the branch's `const` value
+// if set, otherwise the sole `enum` value if the property is constrained to
+// exactly one, and false if neither is present (i.e. the branch does not
+// pin down a single wire value for the discriminator property).
+func inlineDiscriminatorValue(branch *openapi3.Schema, propertyName string) (string, bool) {
+	if branch == nil {
+		return "", false
+	}
+	propertyRef, ok := branch.Properties[propertyName]
+	if !ok || propertyRef == nil || propertyRef.Value == nil {
+		return "", false
+	}
+	property := propertyRef.Value
+
+	if property.Const != nil {
+		if s, ok := property.Const.(string); ok {
+			return s, true
+		}
+	}
+
+	if len(property.Enum) == 1 {
+		if s, ok := property.Enum[0].(string); ok {
+			return s, true
+		}
+	}
+
+	return "", false
 }
 
 // setSkipOptionalPointerForContainerType ensures that the "optional pointer" is skipped on container types (such as a slice or a map).
